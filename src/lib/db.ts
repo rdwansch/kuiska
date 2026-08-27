@@ -2,6 +2,7 @@ import "server-only";
 
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
+import * as schema from "./db/schema";
 
 const databaseUrl = process.env.DATABASE_URL;
 
@@ -24,4 +25,4 @@ if (process.env.NODE_ENV !== "production") {
   globalForDatabase.pool = pool;
 }
 
-export const db = drizzle({ client: pool });
+export const db = drizzle({ client: pool, schema });
