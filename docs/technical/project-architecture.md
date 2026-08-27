@@ -8,7 +8,7 @@
 - **Authentication:** Better Auth
 - **Validation:** Zod
 - **Testing:** Vitest + React Testing Library
-- **Styling & UI:** Tailwind CSS + Shadcn UI
+- **Styling & UI:** Tailwind CSS + Shadcn UI (see `docs/technical/design-system.md` for Ocean Clean palette)
 - **Deployment:** Vercel
 
 ---
