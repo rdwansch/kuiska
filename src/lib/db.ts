@@ -25,4 +25,4 @@ if (process.env.NODE_ENV !== "production") {
   globalForDatabase.pool = pool;
 }
 
-export const db = drizzle({ client: pool, schema });
+export const db = drizzle(pool, { schema, mode: "default" });
