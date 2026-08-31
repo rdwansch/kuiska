@@ -95,6 +95,12 @@ export const quiz = mysqlTable(
   (table) => [
     index("quiz_owner_id_idx").on(table.ownerId),
     index("quiz_public_discovery_idx").on(table.visibility, table.reviewStatus, table.createdAt),
+    index("quiz_random_category_idx").on(
+      table.visibility,
+      table.reviewStatus,
+      table.category,
+      table.id
+    ),
   ]
 );
 

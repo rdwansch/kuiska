@@ -1,0 +1,1 @@
+CREATE INDEX `quiz_random_category_idx` ON `quiz` (`visibility`,`review_status`,`category`,`id`);

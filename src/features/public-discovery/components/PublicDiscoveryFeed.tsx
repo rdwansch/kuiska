@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Icon } from "~/components/ui/icon";
+import { RandomQuizCategoryActions } from "~/features/random-quiz";
 import { cn } from "~/utils/cn";
 import type { PublicDiscoveryQuiz } from "../types/PublicDiscoveryType";
 import { PublicDiscoveryQuizCard } from "./PublicDiscoveryQuizCard";
@@ -54,6 +55,8 @@ export function PublicDiscoveryFeed({ quizzes }: { quizzes: PublicDiscoveryQuiz[
           <Icon name="lucide:plus" aria-hidden="true" className="size-4" />
         </Link>
       </div>
+
+      <RandomQuizCategoryActions />
 
       {quizzes.length === 0 ? (
         <div
