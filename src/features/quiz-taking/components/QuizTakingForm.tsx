@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
+import { SocialTriviaRoomCreator } from "~/features/social-trivia/components/SocialTriviaRoomCreator";
 import { useQuizTakingHook } from "../hooks/QuizTakingHook";
 import type { QuizTakingAccessState } from "../types/QuizTakingType";
 import { QuizTakingAccessForm } from "./QuizTakingAccessForm";
@@ -71,6 +72,8 @@ export function QuizTakingForm({ initialState }: { initialState: QuizTakingAcces
               {categoryLabels[quiz.category]} · {quiz.questions.length} soal
             </p>
           </header>
+
+          <SocialTriviaRoomCreator quizId={quiz.id} />
 
           {formState.error ? (
             <Badge className="mt-8 w-full" role="alert">

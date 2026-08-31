@@ -1,6 +1,6 @@
 # Feature 4 — Social Trivia Rooms
 
-- **Status:** Planned
+- **Status:** Implemented — focused automated tests intentionally deferred by user request
 - **Contract readiness:** Implementation-ready
 - **User stories:** [US-06 — Create or join a Live Trivia room](../business/user-stories.md#us-06-create-or-join-a-live-trivia-room); [US-07 — Play a Self-Paced Race](../business/user-stories.md#us-07-play-a-self-paced-race); [US-08 — See the final Live Trivia result](../business/user-stories.md#us-08-see-the-final-live-trivia-result)
 - **Depends on:** Feature 2 — Quiz Creation; Feature 3 — Quiz Taking and Scoring
@@ -33,6 +33,16 @@ The product calls the first release a duel, but the data model exposes
 - A provisional Self-Paced Race rank immediately after a player completes.
 - A final result with rematch and share actions.
 
+### Implemented runtime decisions
+
+- Live room state is delivered as authenticated HTTP snapshots. The client polls
+  the existing application rather than introducing a real-time provider.
+- A Live Trivia question runs for 20 seconds and its shared answer reveal lasts
+  3 seconds before the next question opens.
+- A Self-Paced Race expires after 24 hours. A deadline marks the room expired
+  and finalises incomplete players using their answers so far and the deadline
+  as their duration.
+
 ### Explicitly out of scope
 
 - More than two participants, teams, matchmaking, bots, or spectator mode.
@@ -62,6 +72,7 @@ Drizzle migration.
 | `currentQuestionPosition`  | integer, nullable              | Server-owned Live Trivia question position.     |
 | `questionOpenedAt`         | timestamp, nullable            | Server-owned Live Trivia question start.        |
 | `questionEndsAt`           | timestamp, nullable            | Server-owned Live Trivia timer end.             |
+| `questionRevealEndsAt`     | timestamp, nullable            | Server-owned shared-reveal end time.            |
 | `deadlineAt`               | timestamp, nullable            | Self-Paced Race completion deadline.            |
 | `startedAt`, `completedAt` | timestamp, nullable            | Room lifecycle timestamps.                      |
 | `createdAt`, `updatedAt`   | timestamp                      | Required audit timestamps.                      |
@@ -161,18 +172,19 @@ question, one shared timer, and one answer decision at a time.
 
 ## Definition of Done
 
-- [ ] An authenticated creator can create and share a two-player room.
-- [ ] A participant cannot join twice or join a full room.
-- [ ] Live Trivia locks answers and reveals them only after every shared timer
+- [x] An authenticated creator can create and share a two-player room.
+- [x] A participant cannot join twice or join a full room.
+- [x] Live Trivia locks answers and reveals them only after every shared timer
       ends.
-- [ ] Live Trivia never exposes a running score or leader.
-- [ ] Self-Paced Race lets both participants progress independently.
-- [ ] Both modes rank correct answers before time.
-- [ ] Self-Paced Race displays a provisional rank after individual completion.
-- [ ] The server rejects cross-quiz answers, invalid state transitions, and
+- [x] Live Trivia never exposes a running score or leader.
+- [x] Self-Paced Race lets both participants progress independently.
+- [x] Both modes rank correct answers before time.
+- [x] Self-Paced Race displays a provisional rank after individual completion.
+- [x] The server rejects cross-quiz answers, invalid state transitions, and
       late live submissions.
-- [ ] The Drizzle schema and migration are committed together.
+- [x] The Drizzle schema and migration are committed together.
 - [ ] `npm run typecheck`, `npm run lint`, and focused feature tests pass.
+      Focused automated tests were intentionally deferred for this delivery.
 
 ## Handoff boundary
 
