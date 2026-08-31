@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
+import { Icon } from "~/components/ui/icon";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { useQuizCreationHook } from "../hooks/QuizCreationHook";
@@ -15,22 +16,6 @@ const categoryOptions = [
   { value: "technology", label: "Teknologi" },
   { value: "entertainment", label: "Hiburan" },
 ] as const;
-
-function PlusIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="size-4">
-      <path d="M10 4V16M4 10H16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function RemoveIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="size-4">
-      <path d="M5 10H15" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-    </svg>
-  );
-}
 
 export function QuizCreationForm() {
   const {
@@ -83,15 +68,7 @@ export function QuizCreationForm() {
 
           <section className="relative max-w-[44rem]">
             <div className="bg-surface-jade text-success mb-8 grid size-16 place-items-center rounded-[43%_57%_48%_52%/54%_42%_58%_46%]">
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="size-8">
-                <path
-                  d="M5 12.5L9.4 17L19 7"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <Icon name="lucide:check" aria-hidden="true" className="size-8" strokeWidth={2.2} />
             </div>
             <h1 className="font-display text-4xl leading-[1.06] font-bold tracking-[-0.03em] text-balance sm:text-6xl">
               Kuismu siap dimainkan.
@@ -333,7 +310,7 @@ export function QuizCreationForm() {
                           onClick={() => removeQuestion(question.id)}
                           disabled={isPending}
                         >
-                          <RemoveIcon />
+                          <Icon name="lucide:minus" aria-hidden="true" className="size-4" />
                           Hapus
                         </Button>
                       ) : null}
@@ -392,7 +369,7 @@ export function QuizCreationForm() {
                                   disabled={isPending}
                                   aria-label={`Hapus pilihan ${optionIndex + 1}`}
                                 >
-                                  <RemoveIcon />
+                                  <Icon name="lucide:minus" aria-hidden="true" className="size-4" />
                                   Hapus
                                 </Button>
                               ) : null}
@@ -421,7 +398,7 @@ export function QuizCreationForm() {
                         onClick={() => addOption(question.id)}
                         disabled={isPending}
                       >
-                        <PlusIcon />
+                        <Icon name="lucide:plus" aria-hidden="true" className="size-4" />
                         Tambah pilihan
                       </Button>
                     </fieldset>
@@ -436,7 +413,7 @@ export function QuizCreationForm() {
                 onClick={addQuestion}
                 disabled={isPending}
               >
-                <PlusIcon />
+                <Icon name="lucide:plus" aria-hidden="true" className="size-4" />
                 Tambah pertanyaan
               </Button>
             </section>
