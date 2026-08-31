@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
+import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { useQuizTakingHook } from "../hooks/QuizTakingHook";
 import type { QuizTakingAccessState } from "../types/QuizTakingType";
 import { QuizTakingAccessForm } from "./QuizTakingAccessForm";
@@ -97,7 +98,12 @@ export function QuizTakingForm({ initialState }: { initialState: QuizTakingAcces
                     <legend className="sr-only">
                       Pilih jawaban untuk pertanyaan {questionIndex + 1}
                     </legend>
-                    <div className="space-y-3">
+                    <RadioGroup
+                      value={formState.answers[question.id]}
+                      onValueChange={(optionId) => chooseAnswer(question.id, optionId)}
+                      disabled={isPending}
+                      className="space-y-3"
+                    >
                       {question.options.map((option) => {
                         const isSelected = formState.answers[question.id] === option.id;
 
@@ -110,15 +116,7 @@ export function QuizTakingForm({ initialState }: { initialState: QuizTakingAcces
                                 : "border-border bg-surface-strong hover:border-primary/45 hover:bg-surface-neutral"
                             } ${isPending ? "cursor-not-allowed opacity-70" : ""}`}
                           >
-                            <input
-                              type="radio"
-                              name={`answer-${question.id}`}
-                              value={option.id}
-                              checked={isSelected}
-                              onChange={() => chooseAnswer(question.id, option.id)}
-                              disabled={isPending}
-                              className="accent-primary size-4 shrink-0"
-                            />
+                            <RadioGroupItem value={option.id} className="shrink-0" />
                             <span className="min-w-0 flex-1 text-base leading-6 font-semibold">
                               {option.content}
                             </span>
@@ -128,7 +126,7 @@ export function QuizTakingForm({ initialState }: { initialState: QuizTakingAcces
                           </label>
                         );
                       })}
-                    </div>
+                    </RadioGroup>
                   </fieldset>
                 </section>
               ))}

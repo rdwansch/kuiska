@@ -8,6 +8,15 @@ import { Button } from "~/components/ui/button";
 import { Icon } from "~/components/ui/icon";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import { Textarea } from "~/components/ui/textarea";
 import { useQuizCreationHook } from "../hooks/QuizCreationHook";
 import { QuizCreationTopicArt } from "./QuizCreationTopicArt";
 
@@ -173,7 +182,7 @@ export function QuizCreationForm() {
                   <Label htmlFor="quiz-description" required>
                     Deskripsi singkat
                   </Label>
-                  <textarea
+                  <Textarea
                     id="quiz-description"
                     value={formInput.description}
                     onChange={(event) => updateTextField("description", event.target.value)}
@@ -182,32 +191,40 @@ export function QuizCreationForm() {
                     maxLength={500}
                     required
                     disabled={isPending}
-                    className="bg-surface-strong text-foreground placeholder:text-muted-foreground focus-visible:ring-ring focus-visible:ring-offset-background border-input hover:border-primary/40 focus-visible:border-ring disabled:bg-disabled-bg min-h-32 w-full resize-y rounded-[var(--radius-control)] border px-4 py-3 text-base leading-6 transition-[border-color,box-shadow,background-color] duration-200 ease-[var(--ease-field)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed"
+                    className="min-h-32"
                   />
                 </div>
 
                 <div className="space-y-2.5">
                   <Label htmlFor="quiz-category">Kategori</Label>
-                  <select
-                    id="quiz-category"
+                  <Select
                     value={formInput.category}
-                    onChange={(event) =>
-                      updateCategory(event.target.value as typeof formInput.category)
-                    }
+                    onValueChange={(value) => updateCategory(value as typeof formInput.category)}
                     disabled={isPending}
-                    className="bg-surface-strong text-foreground focus-visible:ring-ring focus-visible:ring-offset-background border-input hover:border-primary/40 focus-visible:border-ring disabled:bg-disabled-bg h-13 w-full rounded-[var(--radius-control)] border px-4 text-base transition-[border-color,box-shadow,background-color] duration-200 ease-[var(--ease-field)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed"
                   >
-                    {categoryOptions.map((category) => (
-                      <option key={category.value} value={category.value}>
-                        {category.label}
-                      </option>
-                    ))}
-                  </select>
+                    <SelectTrigger id="quiz-category" className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categoryOptions.map((category) => (
+                        <SelectItem key={category.value} value={category.value}>
+                          {category.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <fieldset className="space-y-3">
                   <legend className="text-foreground text-sm font-semibold">Visibilitas</legend>
-                  <div className="grid gap-3 sm:grid-cols-2">
+                  <RadioGroup
+                    value={formInput.visibility}
+                    onValueChange={(value) =>
+                      updateVisibility(value as typeof formInput.visibility)
+                    }
+                    disabled={isPending}
+                    className="grid gap-3 sm:grid-cols-2"
+                  >
                     {(
                       [
                         {
@@ -231,14 +248,10 @@ export function QuizCreationForm() {
                         }`}
                       >
                         <span className="flex items-start gap-3">
-                          <input
-                            type="radio"
-                            name="visibility"
+                          <RadioGroupItem
+                            id={`visibility-${visibility.value}`}
                             value={visibility.value}
-                            checked={formInput.visibility === visibility.value}
-                            onChange={() => updateVisibility(visibility.value)}
-                            disabled={isPending}
-                            className="accent-primary mt-1 size-4"
+                            className="mt-1"
                           />
                           <span>
                             <span className="block text-sm font-bold">{visibility.title}</span>
@@ -249,7 +262,7 @@ export function QuizCreationForm() {
                         </span>
                       </label>
                     ))}
-                  </div>
+                  </RadioGroup>
                 </fieldset>
 
                 {formInput.visibility === "private" ? (
@@ -320,7 +333,7 @@ export function QuizCreationForm() {
                       <Label htmlFor={`question-${question.id}`} required>
                         Teks pertanyaan
                       </Label>
-                      <textarea
+                      <Textarea
                         id={`question-${question.id}`}
                         value={question.content}
                         onChange={(event) => updateQuestionContent(question.id, event.target.value)}
@@ -329,7 +342,7 @@ export function QuizCreationForm() {
                         maxLength={1000}
                         required
                         disabled={isPending}
-                        className="bg-surface-strong text-foreground placeholder:text-muted-foreground focus-visible:ring-ring focus-visible:ring-offset-background border-input hover:border-primary/40 focus-visible:border-ring disabled:bg-disabled-bg min-h-28 w-full resize-y rounded-[var(--radius-control)] border px-4 py-3 text-base leading-6 transition-[border-color,box-shadow,background-color] duration-200 ease-[var(--ease-field)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed"
+                        className="min-h-28"
                       />
                     </div>
 
@@ -337,7 +350,12 @@ export function QuizCreationForm() {
                       <legend className="text-foreground text-sm font-semibold">
                         Pilihan jawaban
                       </legend>
-                      <div className="mt-3 space-y-3">
+                      <RadioGroup
+                        value={question.options.find((option) => option.isCorrect)?.id}
+                        onValueChange={(optionId) => selectCorrectOption(question.id, optionId)}
+                        disabled={isPending}
+                        className="mt-3 space-y-3"
+                      >
                         {question.options.map((option, optionIndex) => (
                           <div
                             key={option.id}
@@ -349,14 +367,7 @@ export function QuizCreationForm() {
                           >
                             <div className="flex items-center justify-between gap-3">
                               <label className="flex cursor-pointer items-center gap-2 text-sm font-semibold">
-                                <input
-                                  type="radio"
-                                  name={`correct-option-${question.id}`}
-                                  checked={option.isCorrect}
-                                  onChange={() => selectCorrectOption(question.id, option.id)}
-                                  disabled={isPending}
-                                  className="accent-primary size-4"
-                                />
+                                <RadioGroupItem value={option.id} />
                                 Jawaban benar
                               </label>
                               {question.options.length > 2 ? (
@@ -389,7 +400,7 @@ export function QuizCreationForm() {
                             />
                           </div>
                         ))}
-                      </div>
+                      </RadioGroup>
                       <Button
                         type="button"
                         variant="outline"

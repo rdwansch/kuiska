@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import { Button } from "~/components/ui/button";
 import { Icon } from "~/components/ui/icon";
 import { cn } from "~/utils/cn";
 
@@ -71,14 +72,15 @@ export function LandingTriviaDemo() {
           const isIncorrect = revealed && isSelected && answer !== correctAnswer;
 
           return (
-            <button
+            <Button
               key={answer}
               type="button"
+              variant="ghost"
               disabled={selectedAnswer !== null}
               aria-pressed={isSelected}
               onClick={() => setSelectedAnswer(answer)}
               className={cn(
-                "bg-surface-strong text-foreground flex min-h-14 items-center gap-3 rounded-[var(--radius-control)] border px-4 py-3 text-left text-base font-semibold transition-[transform,border-color,background-color] duration-200 ease-[var(--ease-field)] disabled:cursor-default disabled:opacity-100",
+                "bg-surface-strong text-foreground min-h-14 w-full justify-start gap-3 rounded-[var(--radius-control)] border px-4 py-3 text-left text-base font-semibold whitespace-normal transition-[transform,border-color,background-color] duration-200 ease-[var(--ease-field)] disabled:cursor-default disabled:opacity-100",
                 !selectedAnswer && "hover:border-primary/55 hover:bg-surface-berry",
                 isSelected &&
                   !revealed &&
@@ -96,7 +98,7 @@ export function LandingTriviaDemo() {
                   <Icon name="lucide:check" aria-hidden="true" className="size-4" />
                 </span>
               ) : null}
-            </button>
+            </Button>
           );
         })}
       </div>
@@ -112,13 +114,15 @@ export function LandingTriviaDemo() {
                 : "Venus jawabannya. Satu rotasinya memakan sekitar 243 hari Bumi."}
         </p>
         {revealed ? (
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="sm"
             onClick={reset}
-            className="text-primary hover:bg-surface-berry shrink-0 rounded-[var(--radius-label)] px-2.5 py-2 text-sm font-bold transition-colors"
+            className="text-primary hover:bg-surface-berry min-h-11 shrink-0 rounded-[var(--radius-label)] px-2.5 py-2 text-sm font-bold transition-colors"
           >
             Ulangi
-          </button>
+          </Button>
         ) : null}
       </div>
     </div>
