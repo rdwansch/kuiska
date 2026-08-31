@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { connection } from "next/server";
 
+import { AuthenticatedAppShell } from "~/components/navigation/AuthenticatedAppShell";
+import { getAuthenticationSession } from "~/features/authentication/services/AuthenticationSessionService";
 import { PublicDiscoveryFeed } from "./components/PublicDiscoveryFeed";
 import { PublicDiscoveryHome } from "./components/PublicDiscoveryHome";
 import { getPublicDiscoveryQuizzes } from "./services/PublicDiscoveryService";
@@ -12,7 +14,20 @@ export async function PublicDiscoveryHomePage() {
 
 export async function PublicDiscoveryExplorePage() {
   await connection();
-  const quizzes = await getPublicDiscoveryQuizzes();
+  const [session, quizzes] = await Promise.all([
+    getAuthenticationSession(),
+    getPublicDiscoveryQuizzes(),
+  ]);
+
+  const feed = <PublicDiscoveryFeed quizzes={quizzes} />;
+
+  if (session?.user) {
+    return (
+      <AuthenticatedAppShell user={session.user}>
+        <main className="page-shell flex-1 pt-6 pb-8 sm:pt-8">{feed}</main>
+      </AuthenticatedAppShell>
+    );
+  }
 
   return (
     <main className="page-shell flex-1 pt-6 pb-8 sm:pt-8">
@@ -24,7 +39,7 @@ export async function PublicDiscoveryExplorePage() {
           Buat kuis
         </Link>
       </nav>
-      <PublicDiscoveryFeed quizzes={quizzes} />
+      {feed}
     </main>
   );
 }

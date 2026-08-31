@@ -1,9 +1,10 @@
 import "server-only";
 
 import { headers } from "next/headers";
+import { cache } from "react";
 
 import { auth } from "~/lib/auth";
 
-export async function getAuthenticationSession() {
+export const getAuthenticationSession = cache(async () => {
   return auth.api.getSession({ headers: await headers() });
-}
+});

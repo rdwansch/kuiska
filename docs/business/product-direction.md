@@ -106,6 +106,27 @@ Its hierarchy is:
 2. Discover interesting playable quizzes in the Explore feed.
 3. Create a quiz from an always-visible, secondary action.
 
+### Authenticated wayfinding
+
+After sign-in, Kuiska changes from a public marketing surface into a product
+experience. Every signed-in page must make that state legible without turning
+the experience into an administrative dashboard:
+
+- Desktop uses a light, persistent app header with **Explore**,
+  **Aktivitasku**, a clear **Buat kuis** action, and the player's avatar and
+  first name.
+- The player control opens the account-level actions: **Aktivitasku** and
+  **Keluar**. The first release uses an initial-based avatar; profile-image
+  upload is not required.
+- Mobile uses labelled bottom navigation for the small set of primary
+  destinations. A **Main** destination appears only while the player has an
+  active room or incoming challenge; it is not empty permanent navigation.
+- The current destination must be visually and programmatically identifiable.
+  An active room or challenge is communicated by its compact Match Ticket,
+  not by decorative notification badges.
+- During active trivia, product-level navigation recedes so the room remains
+  the focused experience.
+
 ## 8. Brand Direction Chosen So Far
 
 Kuiska should be **clean, colorful, calm, and playful**. The gameplay carries the excitement; the interface should not be visually noisy.

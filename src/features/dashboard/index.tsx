@@ -1,5 +1,7 @@
 import { redirect } from "next/navigation";
 
+import { AuthenticatedAppShell } from "~/components/navigation/AuthenticatedAppShell";
+import { getAuthenticationSession } from "~/features/authentication/services/AuthenticationSessionService";
 import { DashboardPage } from "./components/DashboardPage";
 import { getDashboardData, readDashboardPage } from "./services/DashboardService";
 
@@ -16,5 +18,12 @@ export async function DashboardHistoryPage({
 
   if (!data) redirect("/signin");
 
-  return <DashboardPage data={data} />;
+  const session = await getAuthenticationSession();
+  if (!session?.user) redirect("/signin");
+
+  return (
+    <AuthenticatedAppShell user={session.user}>
+      <DashboardPage data={data} />
+    </AuthenticatedAppShell>
+  );
 }

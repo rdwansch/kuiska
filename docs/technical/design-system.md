@@ -404,6 +404,28 @@ The Match Ticket is a social interruption inside another flow, not a reusable ge
 - Mobile navigation may use a bottom bar for the product experience, but labels remain visible for unfamiliar actions.
 - Landing navigation contains only actions necessary for orientation and conversion.
 
+#### Public and authenticated shells
+
+- The public shell is the landing navigation: orientation links plus **Masuk**
+  and **Buat akun**. It never impersonates signed-in product navigation.
+- The authenticated shell is present on every standard signed-in product route.
+  Its desktop header contains the Kuiska mark, **Explore**, **Aktivitasku**,
+  the secondary-but-always-visible **Buat kuis** action, and an account trigger
+  showing an initial avatar and the player's first name. Active trivia and room
+  routes intentionally use their own focused chrome.
+- The account trigger is a normal button, not a pill badge. Its menu contains
+  **Aktivitasku** and **Keluar**. Avatar images are optional enhancement only;
+  the initial mark is the MVP identity treatment.
+- On mobile, render labelled bottom navigation for **Explore** and
+  **Aktivitasku**. Do not create an empty **Main** destination: introduce it
+  only when room state exists. Keep **Buat kuis** as a clearly labelled header
+  action until there is a proven room-aware mobile action model.
+- App navigation remains directly on the page canvas—no liquid glass, sidebar,
+  or decorative badge system. Reserve the tactile Match Ticket for a real
+  active room or incoming challenge.
+- The selected destination must use both a visible active treatment and
+  `aria-current="page"`.
+
 ## 9. Ornament and Interaction System
 
 Ornaments are functional atmosphere. They create depth and guide attention without becoming UI chrome.
