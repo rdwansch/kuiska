@@ -287,11 +287,12 @@ Each step occupies a distinct part of the same path. Use scale and motion to adv
 Explore is an editorial river of playable topics.
 
 - Start with one dominant featured quiz or active challenge.
-- Follow with mixed-scale quiz entries rather than an equal card grid.
+- Follow with a wide, liquid-glass topic navigator that sticks above the Explore flow and navigates to related quiz entries. It is centred within a 1024 px maximum width, uses a 32 px radius, and must sit above the app chrome while it is sticky. Its neutral border must remain legible on the light canvas so the rounded silhouette reads. Its markers and labels stay compact; counts and descriptions belong to the destination section. It is in-page navigation only until Feature 7 has an approved random-play contract; it must not imply personalised ranking or random selection.
+- Follow each station with a paced, vertical group of related quiz entries rather than an equal card grid.
 - Allow topic art to crop beyond its entry and connect visually to the next item.
 - Place category, question count, creator, and activity after the title or in a clear metadata row.
 - Keep the create-quiz action visible but secondary.
-- A Match Ticket may interrupt the river as an active social event.
+- A Match Ticket may interrupt the river only for an active room or incoming challenge. Do not use it as generic product explanation.
 
 On mobile, Explore becomes a paced vertical feed. It must not collapse into a stack of visually identical cards.
 
