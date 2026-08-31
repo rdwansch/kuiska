@@ -7,10 +7,10 @@
 - **Database & ORM:** MySQL (Local) + Drizzle ORM
 - **Authentication:** Better Auth
 - **Validation:** Zod
-- **Testing:** No automated test framework is currently configured. If tests
-  are added, use Vitest + React Testing Library.
+- **Testing:** `bun test` is the current focused-test runner. Use Vitest + React
+  Testing Library only when component or browser-facing coverage requires it.
 - **Styling & UI:** Tailwind CSS + Shadcn UI + Iconify (see `docs/technical/design-system.md` for the Kinetic Social Field system)
-- **Deployment:** Vercel
+- **Deployment:** Vercel. See [Vercel + Aiven Free deployment preparation](deployment.md).
 
 ---
 

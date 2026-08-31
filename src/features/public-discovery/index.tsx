@@ -35,9 +35,17 @@ export async function PublicDiscoveryExplorePage() {
         <Link href="/" className="text-xl font-extrabold tracking-[-0.04em]">
           Kuiska
         </Link>
-        <Link href="/quizzes/new" className="button-link button-link-secondary">
-          Buat kuis
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/leaderboard"
+            className="text-muted-foreground hover:text-foreground inline-flex min-h-11 items-center px-3 text-sm font-bold transition-colors"
+          >
+            Papan skor
+          </Link>
+          <Link href="/quizzes/new" className="button-link button-link-secondary">
+            Buat kuis
+          </Link>
+        </div>
       </nav>
       {feed}
     </main>

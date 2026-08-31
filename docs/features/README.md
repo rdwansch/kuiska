@@ -27,7 +27,7 @@ screens in the final product. User story IDs follow the same sequence.
 |   5 | Public Discovery & Curation | [US-09](../business/user-stories.md#us-09-discover-reviewed-public-quizzes)                                                                                                                                                  | Implemented      | Implementation-ready   | [05-public-discovery-and-curation.md](./05-public-discovery-and-curation.md) |
 |   6 | Dashboard and History       | [US-10](../business/user-stories.md#us-10-view-created-quizzes-and-attempt-history)                                                                                                                                          | Implemented      | Implementation-ready   | [06-dashboard-and-history.md](./06-dashboard-and-history.md)                 |
 |   7 | Categories and Random Quiz  | [US-11](../business/user-stories.md#us-11-play-a-random-quiz-by-category)                                                                                                                                                    | Implemented      | Implementation-ready   | [07-categories-and-random-quiz.md](./07-categories-and-random-quiz.md)       |
-|   8 | Global Leaderboard          | [US-12](../business/user-stories.md#us-12-view-the-most-active-players)                                                                                                                                                      | Planned          | Business scope only    | [08-global-leaderboard.md](./08-global-leaderboard.md)                       |
+|   8 | Global Leaderboard          | [US-12](../business/user-stories.md#us-12-view-the-most-active-players)                                                                                                                                                      | Implemented      | Implementation-ready   | [08-global-leaderboard.md](./08-global-leaderboard.md)                       |
 |   9 | Theme Customization         | [US-13](../business/user-stories.md#us-13-choose-a-quiz-page-theme)                                                                                                                                                          | Phase 2; on hold | Business scope only    | [09-theme-customization.md](./09-theme-customization.md)                     |
 
 ## Execution audit — 2026-08-31
@@ -45,7 +45,7 @@ implementation exists yet.
 | Feature 5 — Public Discovery | partial |
 | Feature 6 — Dashboard        | partial |
 | Feature 7 — Random Quiz      | partial |
-| Feature 8 — Leaderboard      | no      |
+| Feature 8 — Leaderboard      | yes     |
 | Feature 9 — Themes           | no      |
 
 ## Dependency rules
@@ -74,4 +74,5 @@ agent one feature document at a time with this prompt:
 > later feature or an explicitly out-of-scope item. If the documents conflict
 > with the codebase, stop and report the conflict.
 
-Features 4–7 are implemented but retain focused-test Definition of Done items.
+Features 4–7 are implemented but retain focused-test Definition of Done items;
+Feature 8 has focused-test coverage.

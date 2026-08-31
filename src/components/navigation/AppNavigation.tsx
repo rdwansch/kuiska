@@ -19,6 +19,7 @@ type AppNavigationProps = {
 const destinations = [
   { href: "/", label: "Explore", icon: "lucide:compass" },
   { href: "/me", label: "Aktivitasku", icon: "lucide:clock-3" },
+  { href: "/leaderboard", label: "Papan skor", icon: "lucide:trophy" },
 ] as const;
 
 function isCurrentPath(pathname: string, href: string) {
@@ -133,7 +134,7 @@ export function AppNavigation({ user }: AppNavigationProps) {
       </header>
 
       <nav
-        className="border-border bg-background/95 fixed inset-x-0 bottom-0 z-30 grid h-16 grid-cols-2 border-t backdrop-blur-sm md:hidden"
+        className="border-border bg-background/95 fixed inset-x-0 bottom-0 z-30 grid h-16 grid-cols-3 border-t backdrop-blur-sm md:hidden"
         aria-label="Navigasi produk"
       >
         {destinations.map((destination) => {
