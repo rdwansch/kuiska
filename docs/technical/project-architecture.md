@@ -8,7 +8,7 @@
 - **Authentication:** Better Auth
 - **Validation:** Zod
 - **Testing:** Vitest + React Testing Library
-- **Styling & UI:** Tailwind CSS + Shadcn UI (see `docs/technical/design-system.md` for Ocean Clean palette)
+- **Styling & UI:** Tailwind CSS + Shadcn UI (see `docs/technical/design-system.md` for the Quiet Arena system)
 - **Deployment:** Vercel
 
 ---
@@ -34,7 +34,7 @@ src/
 │       ├── repositories/     # Generic folder name
 │       ├── schemas/          # Generic folder name
 │       ├── types/            # Generic folder name
-│       └── index.ts          # Feature Public API / Main Entry Point
+│       └── index.ts          # Feature entry point and main page
 ├── components/               # Shared / Global UI Components
 │   ├── ui/                   # Primitive design system components (e.g., Shadcn UI)
 │   └── layout/               # Global layout elements (Navbar, Footer)
@@ -52,7 +52,7 @@ src/
 ### A. Routing Layer (`src/app/`)
 
 - **Purpose:** Route handlers and page views only (`page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx`).
-- **Rule:** Do NOT write business logic, complex state management, or inline ORM queries inside `page.tsx`. Import views, components, or services directly from the corresponding `src/features/<feature_name>` module.
+- **Rule:** Do NOT write business logic, complex state management, or inline ORM queries inside `page.tsx`. A route file exports `Page` and returns only the corresponding feature's main page, forwarding any Next.js route props such as `params`.
 
 ### B. Feature Subfolder & File Naming Conventions
 
@@ -74,11 +74,12 @@ Inside each feature directory (`src/features/<feature_name>/`):
 - **`types/` (e.g., `ProfileType.ts`):**
   - Contains TypeScript interfaces, types, and domain-specific type definitions.
 - **`hooks/` (e.g., `ProfileHook.ts`):**
-  - Feature-specific custom React hooks.
+  - Always separate UI and business logic. Put business logic in hook.
 - **`components/` (e.g., `ProfileCard.tsx`):**
   - Feature-specific UI components.
-- **`index.ts` (Public API):**
-  - Exports only the public components, hooks, or service functions exposed to `app/` or other features.
+- **`index.ts` (Feature Entry Point):**
+  - Defines and exports the feature's main page component (for example, `QuizTakingPage`) plus the feature API needed by other features.
+  - Owns page-level access checks, data loading, and route-state handling. The matching `src/app/**/page.tsx` stays a thin Next.js route wrapper.
 
 ### C. Shared & Utility Layer
 

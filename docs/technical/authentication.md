@@ -1,5 +1,21 @@
 # Authentication — Flow
 
+## Implementation status
+
+- **Implemented:** email/password registration, email/password sign-in, username
+  validation, Argon2 password hashing, and server-side session lookup.
+- **Planned:** forgot-password and reset-password flows. They are documented
+  below as a future boundary and do not exist in the current feature code or
+  Better Auth configuration.
+
+## UI contract
+
+- `/signin` and `/signup` use the responsive Quiet Arena authentication shell.
+- Desktop shows a Match Ticket beside the form; mobile keeps the form as the primary view.
+- Interface copy uses casual Indonesian with `kamu`.
+- Validation and authentication errors state the problem without exposing internal details.
+- The visual implementation lives in `src/features/authentication/components/` and consumes semantic tokens from `src/app/globals.css`.
+
 ```ts
 // drizzle
 // src/lib/db.ts
@@ -27,8 +43,6 @@ auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     password: { hash: hashPassword, verify: verifyPassword }, // src/lib/auth-password.ts -> @node-rs/argon2
-    sendResetPassword: async ({ user, url, token }) => {},
-    resetPasswordTokenExpiresIn: 3600,
   },
   user: { additionalFields: { username, displayUsername } },
   plugins: [nextCookies()],
@@ -43,7 +57,7 @@ toNextJsHandler(auth) -> { GET, POST, PATCH, PUT, DELETE }
 ```
 
 ```ts
-// e2e
+// implemented application flow
 // signUp
 UI: AuthenticationSignUp
   -> signUp({ username, name, email, password, confirmPassword })
@@ -59,22 +73,25 @@ UI: AuthenticationSignIn
     -> auth.api.signInEmail({ email, password })
     -> redirect("/")
 
-// forgotPassword
+// session
+auth.api.getSession({ headers: await headers() })
+```
+
+## Planned password reset flow
+
+This flow requires Better Auth reset configuration, an email delivery path, UI,
+validation, and service functions before it can be marked implemented.
+
+```ts
+// planned only
 UI: AuthenticationForgotPassword
   -> requestPasswordReset({ email })
-    -> Zod(AuthenticationSchema)
     -> auth.api.requestPasswordReset({ email, redirectTo: "/reset-password" })
-    -> sendResetPassword({ user, url, token })
+    -> configured email delivery
 
-// resetPassword
 URL: /reset-password?token=xxx
 UI: AuthenticationResetPassword
   -> resetPassword({ token, password, confirmPassword })
-    -> Zod(AuthenticationSchema)
     -> auth.api.resetPassword({ token, newPassword: password })
     -> redirect("/signin")
-
-// session
-auth.api.getSession({ headers: await headers() })
-auth.api.signOut({ headers: await headers() })
 ```
