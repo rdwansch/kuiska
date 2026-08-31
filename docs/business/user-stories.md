@@ -1,172 +1,254 @@
-# User Stories: Quiz App (MVP & Phase 2)
+# Kuiska User Stories
 
-This document contains the _User Stories_ for the **Quiz App** project. Structured using the standard Agile/Scrum format (Role, Feature, Reason) along with _Acceptance Criteria_ to maintain a strict scope and prevent overengineering.
+This document defines Kuiska's business requirements in delivery order. User
+story IDs follow the dependency-safe feature sequence below; they are not a
+separate backlog priority.
 
----
+The feature contracts in [`docs/features/`](../features/README.md) translate
+these stories into implementation boundaries. Acceptance criteria describe the
+required outcome; implementation status is tracked in the feature journey.
 
-## Main Features Summary (MVP Scope)
+## Delivery sequence
 
-1. **Simple Authentication:** Signup & Login using Email + Password.
-2. **Quiz Creation:** Quiz creation form + image attachment option + privacy settings (Public/Private with Secret Code).
-3. **Quiz Taking:** Direct link / secret code access with instant scoring.
-4. **History & Dashboard:** List of created quizzes and completed quiz history.
-5. **Categories & Random Quiz:** 3 static categories provided by the backend (e.g., _General Knowledge_, _Technology_, _Pop Culture_).
-6. **Leaderboard:** Ranking users based on the highest number of completed quizzes.
-7. _(Optional / Phase 2)_ **Quiz Theme Customization:** WordPress-like visual styling (flagged separately to avoid feature creep in early development).
+| Feature | Capability                    | User stories        | Why it is here                                                 | Release |
+| ------: | ----------------------------- | ------------------- | -------------------------------------------------------------- | ------- |
+|       1 | Authentication                | US-01               | Establishes identity and sessions required by creator flows.   | MVP     |
+|       2 | Quiz Creation                 | US-02, US-03        | Produces the quiz content used by every play mode.             | MVP     |
+|       3 | Quiz Taking and Scoring       | US-04, US-05        | Makes a persisted quiz playable and records trusted results.   | MVP     |
+|       4 | Social Trivia Rooms           | US-06, US-07, US-08 | Builds Kuiska's signature social modes on quiz and score data. | MVP     |
+|       5 | Public Discovery and Curation | US-09               | Publishes trusted, playable quizzes and room entry points.     | MVP     |
+|       6 | Dashboard and History         | US-10               | Reads created quizzes and saved attempts from earlier flows.   | MVP     |
+|       7 | Categories and Random Quiz    | US-11               | Selects from the approved public quiz pool.                    | MVP     |
+|       8 | Global Leaderboard            | US-12               | Aggregates authenticated attempt data.                         | MVP     |
+|       9 | Theme Customization           | US-13               | Starts only after the complete MVP is delivered.               | Phase 2 |
 
----
+## Feature 1 — Authentication
 
-## Epic 1: Authentication & User Profile
+Contract: [`01-authentication.md`](../features/01-authentication.md)
 
-### US-01: Account Registration and Login
+### US-01: Register and sign in
 
-- **As a** New / Registered user
-- **I want to** Sign up and log in using my email and password
-- **So that** I can save my quiz history, view my scores, and create my own quizzes.
-
-**Acceptance Criteria:**
-
-- [ ] Users can register by providing Email, Password, and Username.
-- [ ] Users can log in using Email and Password.
-- [ ] Proper error handling for already registered emails or incorrect passwords.
-- [ ] User session is persisted (JWT / Session token).
-
----
-
-### US-02: Dashboard & Activity History
-
-- **As a** Registered user (Logged-in User)
-- **I want to** View a dashboard displaying my created quizzes and quiz attempt history
-- **So that** I can track my scores and manage my published quizzes.
+- **As a** new or returning player
+- **I want to** register and sign in with my email and password
+- **So that** I can create quizzes, save results, and join social rooms.
 
 **Acceptance Criteria:**
 
-- [ ] A "My Quizzes" tab displaying all quizzes created by the user.
-- [ ] A "Score History" tab displaying quizzes taken along with final scores.
-- [ ] Display the date when each quiz was taken.
+- [ ] A new player can register with a unique username, email, and password.
+- [ ] A returning player can sign in with email and password.
+- [ ] Invalid credentials and duplicate accounts return clear, safe errors.
+- [ ] The authenticated session persists across supported page navigation.
 
----
+## Feature 2 — Quiz Creation
 
-## Epic 2: Quiz Management
+Contract: [`02-quiz-creation.md`](../features/02-quiz-creation.md)
 
-### US-03: Create a New Quiz
+### US-02: Create a quiz
 
-- **As a** Registered user
-- **I want to** Create a new quiz with questions, answer options, categories, and images
-- **So that** I can share my quizzes with others.
-
-**Acceptance Criteria:**
-
-- [ ] Users must fill in Quiz Title, Short Description, and select 1 of 3 Static Categories (e.g., _Tech_, _General_, _Entertainment_).
-- [ ] Users can add multiple multiple-choice questions.
-- [ ] Each question must have exactly 1 correct answer.
-- [ ] Users can optionally upload/attach an image to the quiz cover or individual questions.
-
----
-
-### US-04: Quiz Privacy Settings (Public / Private)
-
-- **As a** Quiz creator
-- **I want to** Set my quiz status to Public or Private (protected by a Secret Code)
-- **So that** Only specific people can access it if set to private.
+- **As a** registered creator
+- **I want to** create a quiz with questions, answer options, and a category
+- **So that** other people can play it.
 
 **Acceptance Criteria:**
 
-- [ ] Privacy status options: `Public` or `Private`.
-- [ ] If `Private` is selected, the creator must set a _Secret Code_.
-- [ ] `Public` quizzes appear in general exploration/category feeds.
-- [ ] `Private` quizzes can only be accessed after entering the correct _Secret Code_.
+- [ ] The creator provides a title, short description, and one of the three
+      static categories: Technology, General Knowledge, or Entertainment.
+- [ ] The creator can add multiple multiple-choice questions.
+- [ ] Every question has at least two answer options and exactly one correct
+      option.
+- [ ] The experience provides a generated category-led cover visual; creator
+      image upload is excluded until storage is configured.
 
----
+### US-03: Choose public or private access
 
-## Epic 3: Quiz Execution & Scoring
-
-### US-05: Take Quiz & Share Link
-
-- **As a** Player (Guest or Registered User)
-- **I want to** Take a quiz via a shared link and immediately view my score
-- **So that** I can test my knowledge on the topic.
-
-**Acceptance Criteria:**
-
-- [ ] Users (including Guests) can open the quiz link and start playing immediately.
-- [ ] If the quiz is _Private_, the system prompts for the _Secret Code_ before displaying questions.
-- [ ] Display images on questions if available.
-- [ ] Upon completion, display the final score instantly (e.g., 80/100 or 8 out of 10 correct).
-
----
-
-### US-06: Save Quiz Score
-
-- **As a** Quiz player (Guest / Registered)
-- **I want to** Save my quiz result
-- **So that** My score is recorded on my profile and counts towards the leaderboard.
+- **As a** quiz creator
+- **I want to** make my quiz public or protect it with a secret code
+- **So that** I control who can open it.
 
 **Acceptance Criteria:**
 
-- [ ] If the player is **Logged in**, the score is automatically saved to the database.
-- [ ] If the player is a **Guest**, prompt a modal/notification upon completion: _"Login / Sign up now to save your score!"_.
-- [ ] The score will not be persisted if the Guest declines to log in.
+- [ ] The creator chooses `Public` or `Private` during quiz creation.
+- [ ] A private quiz requires a secret code.
+- [ ] A public quiz can be opened through its direct link without a secret
+      code.
+- [ ] A private quiz exposes its questions only after the correct secret code
+      is submitted.
 
----
+## Feature 3 — Quiz Taking and Scoring
 
-### US-07: Random Quiz Mode by Category
+Contract: [`03-quiz-taking.md`](../features/03-quiz-taking.md)
 
-- **As a** Player looking for a quick game
-- **I want to** Choose a category and get a random quiz
-- **So that** I don't have to spend time browsing for a quiz.
+### US-04: Take a quiz from a shared link
 
-**Acceptance Criteria:**
-
-- [ ] 3 Static Categories served from the backend (e.g., _Technology_, _General Knowledge_, _Entertainment_).
-- [ ] Users can click a "Play Random" button on their chosen category.
-- [ ] The system randomly selects 1 `Public` quiz from that category.
-
----
-
-## Epic 4: Leaderboard & Stats
-
-### US-08: Top Active Users Leaderboard
-
-- **As a** User
-- **I want to** View a leaderboard ranking users who have completed the most quizzes
-- **So that** It creates a fun competitive environment.
+- **As a** guest or registered player
+- **I want to** take a quiz from its shared link and see my result immediately
+- **So that** I can test my knowledge without navigating a catalogue first.
 
 **Acceptance Criteria:**
 
-- [ ] Display top users based on the total number of **completed** quizzes.
-- [ ] Display Username, Total Quizzes Played, and Average Score (optional).
-- [ ] The leaderboard updates automatically whenever a new score is saved.
+- [ ] A public quiz opens directly for guests and registered players.
+- [ ] A private quiz requests its secret code before showing any questions.
+- [ ] The player must answer every question before submitting.
+- [ ] The result shows the correct-answer count and percentage immediately.
 
----
+### US-05: Save an authenticated result
 
-## Epic 5: Customization ( PHASE 2 / FEATURE CREEP WARNING)
-
-> **Execution Note:** Only work on this epic **after the core MVP (Epics 1–4) is 100% finished and deployed**. Do not get stuck on visual customization before core features are fully functional!
-
-### US-09: Custom Quiz Page Theme & Styling
-
-- **As a** Quiz creator
-- **I want to** Choose a color theme/preset for my quiz page
-- **So that** My quiz page has a unique look and feel.
+- **As a** quiz player
+- **I want to** retain my completed quiz result when I am signed in
+- **So that** it contributes to my history and activity ranking.
 
 **Acceptance Criteria:**
 
-- [ ] Provide 3-4 simple color/style presets (e.g., _Minimalist Dark_, _Light Clean_, _Pastel_, _Cyberpunk_).
-- [ ] Creators can pick 1 preset during quiz creation/editing.
-- [ ] The quiz taking page adapts its background and typography based on the selected preset.
+- [ ] A successful authenticated submission is saved automatically.
+- [ ] A guest receives sign-in and sign-up actions after seeing the result.
+- [ ] A guest result is not persisted.
+- [ ] The server calculates the score from persisted quiz data rather than
+      trusting the browser.
 
----
+## Feature 4 — Social Trivia Rooms
 
-## Summary Checklist: MVP vs. Phase 2
+Contract: [`04-social-trivia-rooms.md`](../features/04-social-trivia-rooms.md)
 
-| Feature / Module                  | Priority                      | Complexity |
-| :-------------------------------- | :---------------------------- | :--------- |
-| Auth (Email & Password)           | **MVP (Required)**            | Low        |
-| Create Quiz + Upload Image        | **MVP (Required)**            | Medium     |
-| Public / Private + Secret Code    | **MVP (Required)**            | Low        |
-| Quiz Execution + Instant Scoring  | **MVP (Required)**            | Medium     |
-| Save Score (Auth Gate for Guest)  | **MVP (Required)**            | Low        |
-| 3 Static Categories + Random Quiz | **MVP (Required)**            | Low        |
-| Leaderboard (Most Quizzes Played) | **MVP (Required)**            | Low        |
-| WordPress-style Customizer        | 🛑 **Phase 2 (Hold for now)** | High       |
+### US-06: Create or join a Live Trivia room
+
+- **As a** registered player
+- **I want to** create or join a two-player Live Trivia room
+- **So that** I can compete with someone on the same questions at the same time.
+
+**Acceptance Criteria:**
+
+- [ ] The creator chooses a quiz and receives a shareable room link or code.
+- [ ] A room exposes a participant collection but accepts exactly two
+      participants in the MVP.
+- [ ] Both players see the same question while a shared timer runs.
+- [ ] Submitted answers lock and remain hidden until the shared timer ends.
+- [ ] The correct answer and both outcomes are revealed together after the
+      timer ends.
+- [ ] The running score and current leader remain hidden until the final
+      question.
+
+### US-07: Play a Self-Paced Race
+
+- **As a** registered player
+- **I want to** complete the same quiz as my opponent at my own pace
+- **So that** we can compete without answering each question simultaneously.
+
+**Acceptance Criteria:**
+
+- [ ] Both participants receive the same quiz questions.
+- [ ] Each participant progresses without waiting for the other participant.
+- [ ] A completed player immediately sees their score and provisional rank.
+- [ ] The rank becomes final after both players finish or the room deadline
+      expires.
+- [ ] More correct answers rank higher; completion time breaks a tie.
+
+### US-08: See the final Live Trivia result
+
+- **As a** Live Trivia player
+- **I want to** see the final winner after the last question
+- **So that** the result feels fair and complete.
+
+**Acceptance Criteria:**
+
+- [ ] More correct answers rank higher.
+- [ ] If correct-answer totals match, lower total answer duration ranks higher.
+- [ ] The result shows both players' score, rank, and applicable time tie-break.
+- [ ] The result offers rematch and share actions.
+
+## Feature 5 — Public Discovery and Curation
+
+Contract:
+[`05-public-discovery-and-curation.md`](../features/05-public-discovery-and-curation.md)
+
+### US-09: Discover reviewed public quizzes
+
+- **As a** player
+- **I want to** find quizzes that are suitable for public play
+- **So that** I can trust the content in Explore and public rooms.
+
+**Acceptance Criteria:**
+
+- [ ] A creator can share a quiz directly without requesting public review.
+- [ ] Only approved public quizzes appear in Explore, recommendations, and
+      public room discovery.
+- [ ] The creator can see the current review status.
+- [ ] A rejected quiz is excluded from public discovery but retains its direct
+      access behaviour.
+
+## Feature 6 — Dashboard and History
+
+Contract: [`06-dashboard-and-history.md`](../features/06-dashboard-and-history.md)
+
+### US-10: View created quizzes and attempt history
+
+- **As a** registered player
+- **I want to** view my created quizzes and completed attempts
+- **So that** I can find my content and review my previous results.
+
+**Acceptance Criteria:**
+
+- [ ] A `My Quizzes` view lists quizzes owned by the signed-in user.
+- [ ] A `Score History` view lists the signed-in user's completed attempts.
+- [ ] Every history item shows the quiz, result, and completion date.
+- [ ] One user cannot view another user's private dashboard data.
+
+## Feature 7 — Categories and Random Quiz
+
+Contract:
+[`07-categories-and-random-quiz.md`](../features/07-categories-and-random-quiz.md)
+
+### US-11: Play a random quiz by category
+
+- **As a** player looking for a quick game
+- **I want to** choose a category and receive a random quiz
+- **So that** I can start playing without browsing the full Explore feed.
+
+**Acceptance Criteria:**
+
+- [ ] The player can choose Technology, General Knowledge, or Entertainment.
+- [ ] Each category provides a `Play Random` action.
+- [ ] The system selects only an approved public quiz from the chosen category.
+- [ ] An empty category returns a clear empty state instead of an invalid quiz
+      link.
+
+## Feature 8 — Global Leaderboard
+
+Contract: [`08-global-leaderboard.md`](../features/08-global-leaderboard.md)
+
+### US-12: View the most active players
+
+- **As a** player
+- **I want to** see a leaderboard of users with the most completed quizzes
+- **So that** consistent participation is visible across Kuiska.
+
+**Acceptance Criteria:**
+
+- [ ] Authenticated attempts determine each user's completed-quiz count.
+- [ ] The leaderboard shows username and total quizzes completed.
+- [ ] Average score may appear as supporting information but does not determine
+      the activity rank.
+- [ ] A newly saved attempt is reflected without manual data maintenance.
+
+Room results use their own score-first, time-tie-break ranking from Feature 4;
+that rule does not define this global activity leaderboard.
+
+## Feature 9 — Theme Customization (Phase 2)
+
+Contract: [`09-theme-customization.md`](../features/09-theme-customization.md)
+
+> Start this feature only after Features 1–8 are complete and deployed.
+
+### US-13: Choose a quiz page theme
+
+- **As a** quiz creator
+- **I want to** choose a visual preset for my quiz page
+- **So that** my quiz has a distinct presentation without a free-form editor.
+
+**Acceptance Criteria:**
+
+- [ ] The creator can choose from three or four approved presets.
+- [ ] The selected preset applies consistently to the quiz-taking page.
+- [ ] Every preset preserves readability, accessibility, and Kuiska's product
+      identity.
+- [ ] The first release does not include a free-form or WordPress-style visual
+      customizer.
