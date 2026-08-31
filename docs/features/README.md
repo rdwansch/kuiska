@@ -18,17 +18,17 @@ screens in the final product. User story IDs follow the same sequence.
 
 ## Delivery sequence
 
-| No. | Feature                     | User stories                                                                                                                                                                                                                 | Status           | Contract readiness     | Document                                                                     |
-| --: | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | ---------------------- | ---------------------------------------------------------------------------- |
-|   1 | Authentication              | [US-01](../business/user-stories.md#us-01-register-and-sign-in)                                                                                                                                                              | Implemented      | Current-state boundary | [01-authentication.md](./01-authentication.md)                               |
-|   2 | Quiz Creation               | [US-02](../business/user-stories.md#us-02-create-a-quiz), [US-03](../business/user-stories.md#us-03-choose-public-or-private-access)                                                                                         | Implemented      | Implementation-ready   | [02-quiz-creation.md](./02-quiz-creation.md)                                 |
-|   3 | Quiz Taking and Scoring     | [US-04](../business/user-stories.md#us-04-take-a-quiz-from-a-shared-link), [US-05](../business/user-stories.md#us-05-save-an-authenticated-result)                                                                           | Implemented      | Implementation-ready   | [03-quiz-taking.md](./03-quiz-taking.md)                                     |
-|   4 | Social Trivia Rooms         | [US-06](../business/user-stories.md#us-06-create-or-join-a-live-trivia-room), [US-07](../business/user-stories.md#us-07-play-a-self-paced-race), [US-08](../business/user-stories.md#us-08-see-the-final-live-trivia-result) | Planned          | Implementation-ready   | [04-social-trivia-rooms.md](./04-social-trivia-rooms.md)                     |
-|   5 | Public Discovery & Curation | [US-09](../business/user-stories.md#us-09-discover-reviewed-public-quizzes)                                                                                                                                                  | Planned          | Implementation-ready   | [05-public-discovery-and-curation.md](./05-public-discovery-and-curation.md) |
-|   6 | Dashboard and History       | [US-10](../business/user-stories.md#us-10-view-created-quizzes-and-attempt-history)                                                                                                                                          | Planned          | Business scope only    | [06-dashboard-and-history.md](./06-dashboard-and-history.md)                 |
-|   7 | Categories and Random Quiz  | [US-11](../business/user-stories.md#us-11-play-a-random-quiz-by-category)                                                                                                                                                    | Planned          | Business scope only    | [07-categories-and-random-quiz.md](./07-categories-and-random-quiz.md)       |
-|   8 | Global Leaderboard          | [US-12](../business/user-stories.md#us-12-view-the-most-active-players)                                                                                                                                                      | Planned          | Business scope only    | [08-global-leaderboard.md](./08-global-leaderboard.md)                       |
-|   9 | Theme Customization         | [US-13](../business/user-stories.md#us-13-choose-a-quiz-page-theme)                                                                                                                                                          | Phase 2; on hold | Business scope only    | [09-theme-customization.md](./09-theme-customization.md)                     |
+| No. | Feature                     | User stories                                                                                                                                                                                                                 | Status                      | Contract readiness     | Document                                                                     |
+| --: | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- | ---------------------- | ---------------------------------------------------------------------------- |
+|   1 | Authentication              | [US-01](../business/user-stories.md#us-01-register-and-sign-in)                                                                                                                                                              | Implemented                 | Current-state boundary | [01-authentication.md](./01-authentication.md)                               |
+|   2 | Quiz Creation               | [US-02](../business/user-stories.md#us-02-create-a-quiz), [US-03](../business/user-stories.md#us-03-choose-public-or-private-access)                                                                                         | Implemented                 | Implementation-ready   | [02-quiz-creation.md](./02-quiz-creation.md)                                 |
+|   3 | Quiz Taking and Scoring     | [US-04](../business/user-stories.md#us-04-take-a-quiz-from-a-shared-link), [US-05](../business/user-stories.md#us-05-save-an-authenticated-result)                                                                           | Implemented                 | Implementation-ready   | [03-quiz-taking.md](./03-quiz-taking.md)                                     |
+|   4 | Social Trivia Rooms         | [US-06](../business/user-stories.md#us-06-create-or-join-a-live-trivia-room), [US-07](../business/user-stories.md#us-07-play-a-self-paced-race), [US-08](../business/user-stories.md#us-08-see-the-final-live-trivia-result) | Implemented                 | Implementation-ready   | [04-social-trivia-rooms.md](./04-social-trivia-rooms.md)                     |
+|   5 | Public Discovery & Curation | [US-09](../business/user-stories.md#us-09-discover-reviewed-public-quizzes)                                                                                                                                                  | Implemented                 | Implementation-ready   | [05-public-discovery-and-curation.md](./05-public-discovery-and-curation.md) |
+|   6 | Dashboard and History       | [US-10](../business/user-stories.md#us-10-view-created-quizzes-and-attempt-history)                                                                                                                                          | Implemented                 | Implementation-ready   | [06-dashboard-and-history.md](./06-dashboard-and-history.md)                 |
+|   7 | Categories and Random Quiz  | [US-11](../business/user-stories.md#us-11-play-a-random-quiz-by-category)                                                                                                                                                    | Planned                     | Business scope only    | [07-categories-and-random-quiz.md](./07-categories-and-random-quiz.md)       |
+|   8 | Global Leaderboard          | [US-12](../business/user-stories.md#us-12-view-the-most-active-players)                                                                                                                                                      | Planned                     | Business scope only    | [08-global-leaderboard.md](./08-global-leaderboard.md)                       |
+|   9 | Theme Customization         | [US-13](../business/user-stories.md#us-13-choose-a-quiz-page-theme)                                                                                                                                                          | Phase 2; on hold            | Business scope only    | [09-theme-customization.md](./09-theme-customization.md)                     |
 
 ## Execution audit — 2026-08-31
 
@@ -36,17 +36,17 @@ screens in the final product. User story IDs follow the same sequence.
 feature is implemented but has an unchecked DoD item. `no` means no feature
 implementation exists yet.
 
-| Name                         | Status |
-| ---------------------------- | ------ |
-| Feature 1 — Authentication   | yes    |
-| Feature 2 — Quiz Creation    | yes    |
-| Feature 3 — Quiz Taking      | yes    |
-| Feature 4 — Social Rooms     | no     |
-| Feature 5 — Public Discovery | no     |
-| Feature 6 — Dashboard        | no     |
-| Feature 7 — Random Quiz      | no     |
-| Feature 8 — Leaderboard      | no     |
-| Feature 9 — Themes           | no     |
+| Name                         | Status  |
+| ---------------------------- | ------- |
+| Feature 1 — Authentication   | yes     |
+| Feature 2 — Quiz Creation    | yes     |
+| Feature 3 — Quiz Taking      | yes     |
+| Feature 4 — Social Rooms     | partial |
+| Feature 5 — Public Discovery | partial |
+| Feature 6 — Dashboard        | partial |
+| Feature 7 — Random Quiz      | no      |
+| Feature 8 — Leaderboard      | no      |
+| Feature 9 — Themes           | no      |
 
 ## Dependency rules
 
@@ -74,6 +74,6 @@ agent one feature document at a time with this prompt:
 > later feature or an explicitly out-of-scope item. If the documents conflict
 > with the codebase, stop and report the conflict.
 
-Features 2 and 3 are implemented but still have an uncommitted Definition of
-Done item. After that boundary is resolved, Feature 4 is the next planned,
-implementation-ready feature.
+Features 4–6 are implemented but retain their focused-test Definition of Done
+items. Feature 7 is the next planned feature; its technical contract remains
+business scope only.

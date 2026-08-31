@@ -7,7 +7,8 @@
 - **Database & ORM:** MySQL (Local) + Drizzle ORM
 - **Authentication:** Better Auth
 - **Validation:** Zod
-- **Testing:** Vitest + React Testing Library
+- **Testing:** No automated test framework is currently configured. If tests
+  are added, use Vitest + React Testing Library.
 - **Styling & UI:** Tailwind CSS + Shadcn UI + Iconify (see `docs/technical/design-system.md` for the Kinetic Social Field system)
 - **Deployment:** Vercel
 
