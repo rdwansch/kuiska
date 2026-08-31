@@ -1,6 +1,6 @@
 # Feature 2 — Quiz Creation
 
-- **Status:** Implemented — pending commit
+- **Status:** Implemented
 - **Contract readiness:** Implementation-ready
 - **User stories:** [US-02 — Create a quiz](../business/user-stories.md#us-02-create-a-quiz); [US-03 — Choose public or private access](../business/user-stories.md#us-03-choose-public-or-private-access)
 - **Depends on:** Feature 1 — Authentication
@@ -156,7 +156,7 @@ operation must not leave a partial quiz, question, or option in the database.
 - [x] Server validation rejects no questions, fewer than two options, and any
       question without exactly one correct option.
 - [x] A failed write leaves no partial records.
-- [ ] The Drizzle schema and migration are committed together.
+- [x] The Drizzle schema and migration are committed together.
 - [x] `npm run typecheck` and `npm run lint` pass.
 
 ## Handoff boundary
