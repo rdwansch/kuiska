@@ -126,10 +126,29 @@ export const option = mysqlTable(
   ]
 );
 
+export const quizAttempt = mysqlTable(
+  "quiz_attempt",
+  {
+    id: varchar("id", { length: 36 }).primaryKey(),
+    quizId: varchar("quiz_id", { length: 36 })
+      .notNull()
+      .references(() => quiz.id, { onDelete: "cascade" }),
+    userId: varchar("user_id", { length: 36 })
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    totalQuestions: int("total_questions").notNull(),
+    correctAnswers: int("correct_answers").notNull(),
+    score: int("score").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => [index("quiz_attempt_quiz_user_idx").on(table.quizId, table.userId)]
+);
+
 export const usersRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
   quizzes: many(quiz),
+  quizAttempts: many(quizAttempt),
 }));
 
 export const sessionsRelations = relations(session, ({ one }) => ({
@@ -143,6 +162,7 @@ export const accountsRelations = relations(account, ({ one }) => ({
 export const quizzesRelations = relations(quiz, ({ many, one }) => ({
   owner: one(user, { fields: [quiz.ownerId], references: [user.id] }),
   questions: many(question),
+  attempts: many(quizAttempt),
 }));
 
 export const questionsRelations = relations(question, ({ many, one }) => ({
@@ -154,6 +174,11 @@ export const optionsRelations = relations(option, ({ one }) => ({
   question: one(question, { fields: [option.questionId], references: [question.id] }),
 }));
 
+export const quizAttemptsRelations = relations(quizAttempt, ({ one }) => ({
+  quiz: one(quiz, { fields: [quizAttempt.quizId], references: [quiz.id] }),
+  user: one(user, { fields: [quizAttempt.userId], references: [user.id] }),
+}));
+
 export type User = typeof user.$inferSelect;
 export type NewUser = typeof user.$inferInsert;
 export type Session = typeof session.$inferSelect;
@@ -161,3 +186,4 @@ export type Account = typeof account.$inferSelect;
 export type Quiz = typeof quiz.$inferSelect;
 export type Question = typeof question.$inferSelect;
 export type Option = typeof option.$inferSelect;
+export type QuizAttempt = typeof quizAttempt.$inferSelect;

@@ -1,6 +1,6 @@
 # Feature 3 — Quiz Taking and Scoring
 
-- **Status:** Implemented — pending commit
+- **Status:** Implemented
 - **Contract readiness:** Implementation-ready
 - **User stories:** [US-04 — Take a quiz from a shared link](../business/user-stories.md#us-04-take-a-quiz-from-a-shared-link); [US-05 — Save an authenticated result](../business/user-stories.md#us-05-save-an-authenticated-result)
 - **Depends on:** Feature 2 — Quiz Creation
@@ -149,7 +149,7 @@ Guest or authenticated user
 - [x] A cross-quiz or cross-question option submission is rejected.
 - [x] Every successful authenticated submission creates one `quizAttempt`.
 - [x] Guest submissions display a result without creating `quizAttempt` data.
-- [ ] The Drizzle schema and migration are committed together.
+- [x] The Drizzle schema and migration are committed together.
 - [x] `npm run typecheck` and `npm run lint` pass.
 
 ## Handoff boundary
