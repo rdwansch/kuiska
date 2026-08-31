@@ -84,11 +84,17 @@ export const quiz = mysqlTable(
     category: mysqlEnum("category", ["technology", "general", "entertainment"]).notNull(),
     visibility: mysqlEnum("visibility", ["public", "private"]).notNull(),
     secretCodeHash: text("secret_code_hash"),
+    reviewStatus: mysqlEnum("review_status", ["not_requested", "pending", "approved", "rejected"])
+      .notNull()
+      .default("not_requested"),
+    reviewedAt: timestamp("reviewed_at"),
+    reviewNote: varchar("review_note", { length: 500 }),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow().onUpdateNow(),
   },
   (table) => [
     index("quiz_owner_id_idx").on(table.ownerId),
+    index("quiz_public_discovery_idx").on(table.visibility, table.reviewStatus, table.createdAt),
   ]
 );
 

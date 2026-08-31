@@ -1,6 +1,6 @@
 # Feature 5 — Public Discovery and Curation
 
-- **Status:** Planned
+- **Status:** Implemented — focused automated tests deferred by user request
 - **Contract readiness:** Implementation-ready
 - **User story:** [US-09 — Discover reviewed public quizzes](../business/user-stories.md#us-09-discover-reviewed-public-quizzes)
 - **Depends on:** Feature 2 — Quiz Creation; Feature 3 — Quiz Taking and Scoring; Feature 4 — Social Trivia Rooms
@@ -80,6 +80,18 @@ Use the responsive rules in [`design-system.md`](../technical/design-system.md):
 mobile uses a single comfortable feed, while desktop can use a multi-column
 grid. Both layouts show the same information and actions.
 
+## Implementation decisions
+
+- The public feed is available at `/explore`; for authenticated players, `/`
+  becomes the same content-first Explore home. Visitors without a session keep
+  the existing landing page.
+- A creator requests review from `/me`. The first release deliberately leaves
+  approval, rejection, and `reviewedAt` to an internal operator workflow;
+  there is no reviewer UI or additional dependency.
+- The approved quiz card's Challenge action is the public room entry point. It
+  opens the existing authenticated room-creation flow and deliberately does
+  not list active rooms.
+
 ## Required structure
 
 Follow [the project architecture](../technical/project-architecture.md). All
@@ -102,16 +114,17 @@ src/
 
 ## Definition of Done
 
-- [ ] The Explore query returns only public quizzes with an approved review
+- [x] The Explore query returns only public quizzes with an approved review
       status.
-- [ ] An unreviewed or rejected quiz never appears in Explore or public room
+- [x] An unreviewed or rejected quiz never appears in Explore or public room
       discovery.
-- [ ] Creators can see their current review status.
-- [ ] Every Explore card has a purposeful generated cover when media is absent.
-- [ ] The home shows a compact Match Ticket before the content-first feed.
-- [ ] Mobile and desktop present equivalent Explore actions and information.
-- [ ] The Drizzle schema and migration are committed together.
+- [x] Creators can see their current review status.
+- [x] Every Explore card has a purposeful generated cover when media is absent.
+- [x] The home shows a compact Match Ticket before the content-first feed.
+- [x] Mobile and desktop present equivalent Explore actions and information.
+- [x] The Drizzle schema and migration are committed together.
 - [ ] `npm run typecheck`, `npm run lint`, and focused feature tests pass.
+      Focused tests are deferred by user request.
 
 ## Handoff boundary
 

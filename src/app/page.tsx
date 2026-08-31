@@ -1,5 +1,3 @@
-import { LandingPage } from "~/features/landing";
+import { PublicDiscoveryHomePage } from "~/features/public-discovery";
 
-export default function Home() {
-  return <LandingPage />;
-}
+export default PublicDiscoveryHomePage;
