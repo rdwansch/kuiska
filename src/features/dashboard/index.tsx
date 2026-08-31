@@ -1,5 +1,3 @@
-import { createElement } from "react";
-
 import { redirect } from "next/navigation";
 
 import { DashboardPage } from "./components/DashboardPage";
@@ -18,5 +16,5 @@ export async function DashboardHistoryPage({
 
   if (!data) redirect("/signin");
 
-  return createElement(DashboardPage, { data });
+  return <DashboardPage data={data} />;
 }

@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { createElement } from "react";
 
 import { SocialTriviaRoom } from "./components/SocialTriviaRoom";
 import { getSocialTriviaSnapshot } from "./services/SocialTriviaService";
@@ -10,5 +9,5 @@ export async function SocialTriviaPage({ params }: { params: Promise<{ inviteCod
 
   if (initialState.status === "not-found") notFound();
 
-  return createElement(SocialTriviaRoom, { initialState });
+  return <SocialTriviaRoom initialState={initialState} />;
 }
