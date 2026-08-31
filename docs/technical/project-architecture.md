@@ -8,7 +8,7 @@
 - **Authentication:** Better Auth
 - **Validation:** Zod
 - **Testing:** Vitest + React Testing Library
-- **Styling & UI:** Tailwind CSS + Shadcn UI (see `docs/technical/design-system.md` for the Quiet Arena system)
+- **Styling & UI:** Tailwind CSS + Shadcn UI + Iconify (see `docs/technical/design-system.md` for the Kinetic Social Field system)
 - **Deployment:** Vercel
 
 ---
@@ -36,7 +36,8 @@ src/
 │       ├── types/            # Generic folder name
 │       └── index.ts          # Feature entry point and main page
 ├── components/               # Shared / Global UI Components
-│   ├── ui/                   # Primitive design system components (e.g., Shadcn UI)
+│   ├── brand/                # Shared brand assets and marks
+│   ├── ui/                   # Primitive design system components (Shadcn-generated or local wrappers)
 │   └── layout/               # Global layout elements (Navbar, Footer)
 ├── lib/                      # Initializations & Third-party Configs (DB, Auth)
 │   ├── db.ts                 # Drizzle MySQL Connection Client
@@ -76,14 +77,18 @@ Inside each feature directory (`src/features/<feature_name>/`):
 - **`hooks/` (e.g., `ProfileHook.ts`):**
   - Always separate UI and business logic. Put business logic in hook.
 - **`components/` (e.g., `ProfileCard.tsx`):**
-  - Feature-specific UI components.
+  - Feature-specific compositions that consume shared UI primitives from `src/components/`.
+  - Do not define reusable control primitives here. Native `button`, `input`, `textarea`, `select`, and radio controls must be supplied by `src/components/ui/`.
 - **`index.ts` (Feature Entry Point):**
   - Defines and exports the feature's main page component (for example, `QuizTakingPage`) plus the feature API needed by other features.
   - Owns page-level access checks, data loading, and route-state handling. The matching `src/app/**/page.tsx` stays a thin Next.js route wrapper.
 
 ### C. Shared & Utility Layer
 
-- **`src/components/ui/`:** Contains atomic, feature-agnostic components (e.g., `button.tsx`, `modal.tsx`).
+- **`src/components/ui/`:** Contains atomic, feature-agnostic components. Features import primitives from this directory instead of reimplementing controls locally. The current inventory is `badge`, `button`, `card`, `icon`, `input`, `label`, `radio-group`, `select`, and `textarea`.
+- **Shadcn primitives:** Generate a missing primitive with `bunx shadcn@latest add <component> --yes`, then review the generated source before use. Keep the project alias (`~/utils/cn`), semantic token classes, and the shared Iconify wrapper; do not import an icon library directly into feature code.
+- **`src/components/ui/icon.tsx`:** The single Iconify boundary. Import `Icon` from `~/components/ui/icon` and render `<Icon name="lucide:check" />`; pass `aria-hidden="true"` for decorative icons and provide an accessible name when an icon conveys a control's purpose.
+- **Custom SVG:** Keep only purpose-built Kuiska artwork, paths, and geometry in feature code. Do not use inline SVG as a substitute for a standard UI icon.
 - **`src/lib/`:** Holds singleton instances for Drizzle ORM (`db.ts`) and Better Auth setup (`auth.ts`).
 - **`src/utils/`:** Pure utility functions without side effects (e.g., date formatting, class mergers).
 

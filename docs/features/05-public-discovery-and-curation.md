@@ -49,7 +49,7 @@ battle discovery. A private quiz and an unreviewed public quiz remain shareable
 through their direct access flow, but are not discoverable in the feed.
 
 The generated cover is not a database field. It is a deterministic presentation
-component derived from the quiz category and title, using Quiet Arena colours,
+component derived from the quiz category and title, using Kinetic Social Field colours,
 simple topical symbols and shapes, no gradient, and no stock photography. It
 keeps the feed intentional without requiring creator media.
 

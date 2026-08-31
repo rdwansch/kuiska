@@ -10,7 +10,7 @@
 
 ## UI contract
 
-- `/signin` and `/signup` use the responsive Quiet Arena authentication shell.
+- `/signin` and `/signup` use the responsive Kinetic Social Field authentication shell.
 - Desktop shows a Match Ticket beside the form; mobile keeps the form as the primary view.
 - Interface copy uses casual Indonesian with `kamu`.
 - Validation and authentication errors state the problem without exposing internal details.

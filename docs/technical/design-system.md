@@ -387,7 +387,17 @@ The Match Ticket is a social interruption inside another flow, not a reusable ge
 - Error copy sits below the input and explains how to recover.
 - Do not rely on placeholder text as the label.
 
-### 8.7 Navigation
+### 8.7 Shared primitives and icons
+
+- Feature UI composes primitives from `src/components/`; it does not redefine generic controls locally.
+- `src/components/ui/` is the component boundary for `Button`, `Input`, `Textarea`, `Select`, `RadioGroup`, `Label`, `Badge`, `Card`, and `Icon`.
+- Generate an absent Shadcn primitive with `bunx shadcn@latest add <component> --yes`, then adapt it to the semantic tokens and project import aliases before shipping it.
+- Use `Icon` from `~/components/ui/icon` for standard UI symbols: `<Icon name="lucide:arrow-right" aria-hidden="true" />`.
+- Use an Iconify collection-qualified name and forward sizing or styling through `className`. Do not import icon packages directly in feature files.
+- A standard UI icon is never a hand-authored inline SVG. Inline SVG remains appropriate for original topic art, game paths, and other purpose-built Kuiska geometry; decorative SVGs stay `aria-hidden`.
+- If an icon conveys meaning, pair it with visible text or an accessible name. Decorative icons use `aria-hidden="true"`.
+
+### 8.8 Navigation
 
 - Keep navigation visually light. The landing navigation may float above the page canvas in the approved liquid-glass container; product navigation outside the landing stays directly on its canvas.
 - Active state uses weight, color, or a short path segment—not a pill background.
