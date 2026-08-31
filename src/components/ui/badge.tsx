@@ -8,10 +8,9 @@ export function Badge({ className, ...props }: BadgeProps) {
   return (
     <div
       className={cn(
-        "text-destructive inline-flex items-center border px-2.5 py-0.5 text-xs font-medium",
+        "text-destructive bg-incorrect-muted inline-flex items-center rounded-[var(--radius-label)] border border-current/20 px-3 py-2 text-sm font-semibold",
         className
       )}
-      role="alert"
       {...props}
     />
   );

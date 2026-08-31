@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { useAuthenticationHook } from "../hooks/AuthenticationHook";
@@ -12,21 +13,24 @@ export function AuthenticationSignIn() {
   const { formInput, updateField, isInvalid, handleSubmit } = useAuthenticationHook();
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Welcome back</CardTitle>
-        <CardDescription>
-          Sign in to continue your quizzes. Your progress will be waiting.
+    <Card className="border-0 bg-transparent shadow-none">
+      <CardHeader className="mb-8 space-y-3 p-0">
+        <h1 className="font-display text-4xl leading-[1.08] font-bold tracking-[-0.025em] text-balance sm:text-5xl">
+          Masuk untuk melanjutkan permainan.
+        </h1>
+        <CardDescription className="max-w-md text-[15px] leading-6">
+          Challenge dan hasil duelmu tersimpan di akun yang sama.
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0">
         {formInput.error ? (
-          <Badge className="mb-5 block w-full rounded-[12px] border-red-200 bg-red-50 px-3 py-2 text-left text-red-700">
+          <Badge className="mb-5 w-full" role="alert">
             {formInput.error}
           </Badge>
         ) : null}
-        <form className="space-y-5" onSubmit={(e) => handleSubmit(e, "signin")}>
-          <div className="space-y-2">
+
+        <form className="space-y-5" onSubmit={(event) => handleSubmit(event, "signin")}>
+          <div className="space-y-2.5">
             <Label htmlFor="signin-email" required>
               Email
             </Label>
@@ -34,47 +38,51 @@ export function AuthenticationSignIn() {
               id="signin-email"
               name="email"
               type="email"
-              placeholder="you@school.edu"
+              placeholder="nama@email.com"
               autoComplete="email"
+              autoFocus
               required
               value={formInput.email}
-              onChange={(e) => updateField("email", e.target.value)}
+              onChange={(event) => updateField("email", event.target.value)}
               invalid={isInvalid("email")}
               aria-invalid={isInvalid("email")}
             />
           </div>
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="signin-password" required>
-                Password
-              </Label>
-            </div>
+          <div className="space-y-2.5">
+            <Label htmlFor="signin-password" required>
+              Kata sandi
+            </Label>
             <Input
               id="signin-password"
               name="password"
               type="password"
-              placeholder="Enter your password"
+              placeholder="Masukkan kata sandi"
               autoComplete="current-password"
               required
               value={formInput.password}
-              onChange={(e) => updateField("password", e.target.value)}
+              onChange={(event) => updateField("password", event.target.value)}
               invalid={isInvalid("password")}
               aria-invalid={isInvalid("password")}
             />
           </div>
 
-          <Button type="submit" className="w-full" disabled={formInput.status === "pending"}>
-            {formInput.status === "pending" ? "Signing in..." : "Sign in"}
+          <Button
+            type="submit"
+            size="lg"
+            className="w-full"
+            disabled={formInput.status === "pending"}
+          >
+            {formInput.status === "pending" ? "Memeriksa akun…" : "Masuk"}
           </Button>
 
-          <p className="text-muted-foreground text-center text-sm">
-            Don&apos;t have an account?{" "}
+          <p className="text-muted-foreground pt-1 text-center text-sm">
+            Belum punya akun?{" "}
             <Link
               href="/signup"
-              className="text-primary hover:text-primary/80 font-medium underline underline-offset-4"
+              className="text-primary decoration-primary/25 font-bold underline underline-offset-4 hover:text-[var(--primary-hover)]"
             >
-              Create account
+              Buat akun
             </Link>
           </p>
         </form>

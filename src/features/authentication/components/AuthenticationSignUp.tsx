@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { useAuthenticationHook } from "../hooks/AuthenticationHook";
@@ -12,21 +13,27 @@ export function AuthenticationSignUp() {
   const { formInput, updateField, isInvalid, handleSubmit } = useAuthenticationHook();
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Create account</CardTitle>
+    <Card className="border-0 bg-transparent shadow-none">
+      <CardHeader className="mb-7 space-y-3 p-0">
+        <h1 className="font-display text-4xl leading-[1.08] font-bold tracking-[-0.025em] text-balance sm:text-5xl">
+          Buat profil, lalu masuk ke room pertamamu.
+        </h1>
+        <CardDescription className="max-w-md text-[15px] leading-6">
+          Pakai satu akun untuk menyimpan kuis dan hasil challenge.
+        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0">
         {formInput.error ? (
-          <Badge className="mb-5 block w-full rounded-[12px] border-red-200 bg-red-50 px-3 py-2 text-left text-red-700">
+          <Badge className="mb-5 w-full" role="alert">
             {formInput.error}
           </Badge>
         ) : null}
-        <form className="space-y-5" onSubmit={(e) => handleSubmit(e, "signup")}>
+
+        <form className="space-y-5" onSubmit={(event) => handleSubmit(event, "signup")}>
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               <Label htmlFor="signup-username" required>
-                Username
+                Nama pengguna
               </Label>
               <Input
                 id="signup-username"
@@ -34,33 +41,34 @@ export function AuthenticationSignUp() {
                 type="text"
                 placeholder="kuiska99"
                 autoComplete="username"
+                autoFocus
                 required
                 value={formInput.username}
-                onChange={(e) => updateField("username", e.target.value)}
+                onChange={(event) => updateField("username", event.target.value)}
                 invalid={isInvalid("username")}
                 aria-invalid={isInvalid("username")}
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               <Label htmlFor="signup-name" required>
-                Display name
+                Nama tampilan
               </Label>
               <Input
                 id="signup-name"
                 name="name"
                 type="text"
-                placeholder="Jane Doe"
+                placeholder="Rani"
                 autoComplete="name"
                 required
                 value={formInput.name}
-                onChange={(e) => updateField("name", e.target.value)}
+                onChange={(event) => updateField("name", event.target.value)}
                 invalid={isInvalid("name")}
                 aria-invalid={isInvalid("name")}
               />
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             <Label htmlFor="signup-email" required>
               Email
             </Label>
@@ -68,67 +76,74 @@ export function AuthenticationSignUp() {
               id="signup-email"
               name="email"
               type="email"
-              placeholder="you@school.edu"
+              placeholder="nama@email.com"
               autoComplete="email"
               required
               value={formInput.email}
-              onChange={(e) => updateField("email", e.target.value)}
+              onChange={(event) => updateField("email", event.target.value)}
               invalid={isInvalid("email")}
               aria-invalid={isInvalid("email")}
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="signup-password" required>
-              Password
-            </Label>
-            <Input
-              id="signup-password"
-              name="password"
-              type="password"
-              placeholder="At least 8 characters"
-              autoComplete="new-password"
-              required
-              value={formInput.password}
-              onChange={(e) => updateField("password", e.target.value)}
-              invalid={isInvalid("password")}
-              aria-invalid={isInvalid("password")}
-            />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-2.5">
+              <Label htmlFor="signup-password" required>
+                Kata sandi
+              </Label>
+              <Input
+                id="signup-password"
+                name="password"
+                type="password"
+                placeholder="Minimal 8 karakter"
+                autoComplete="new-password"
+                required
+                value={formInput.password}
+                onChange={(event) => updateField("password", event.target.value)}
+                invalid={isInvalid("password")}
+                aria-invalid={isInvalid("password")}
+              />
+            </div>
+            <div className="space-y-2.5">
+              <Label htmlFor="signup-confirm" required>
+                Ulangi kata sandi
+              </Label>
+              <Input
+                id="signup-confirm"
+                name="confirmPassword"
+                type="password"
+                placeholder="Tulis sekali lagi"
+                autoComplete="new-password"
+                required
+                value={formInput.confirmPassword}
+                onChange={(event) => updateField("confirmPassword", event.target.value)}
+                invalid={isInvalid("confirmPassword")}
+                aria-invalid={isInvalid("confirmPassword")}
+              />
+            </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="signup-confirm" required>
-              Confirm password
-            </Label>
-            <Input
-              id="signup-confirm"
-              name="confirmPassword"
-              type="password"
-              placeholder="Repeat your password"
-              autoComplete="new-password"
-              required
-              value={formInput.confirmPassword}
-              onChange={(e) => updateField("confirmPassword", e.target.value)}
-              invalid={isInvalid("confirmPassword")}
-              aria-invalid={isInvalid("confirmPassword")}
-            />
-          </div>
-
-          <p className="text-muted-foreground text-xs leading-relaxed">
-            Private quizzes need a secret code. Your teacher will share it with you.
+          <p className="text-muted-foreground text-xs leading-5">
+            Nama tampilan muncul di Match Ticket dan hasil room. Kamu bisa memakai nama yang nyaman
+            dilihat teman.
           </p>
 
-          <Button type="submit" className="w-full" disabled={formInput.status === "pending"}>
-            {formInput.status === "pending" ? "Creating..." : "Create account"}
+          <Button
+            type="submit"
+            size="lg"
+            className="w-full"
+            disabled={formInput.status === "pending"}
+          >
+            {formInput.status === "pending" ? "Membuat akun…" : "Buat akun"}
           </Button>
 
-          <p className="text-muted-foreground text-center text-sm">
-            Already have an account?{" "}
+          <p className="text-muted-foreground pt-1 text-center text-sm">
+            Sudah punya akun?{" "}
             <Link
               href="/signin"
-              className="text-primary hover:text-primary/80 font-medium underline underline-offset-4"
+              className="text-primary decoration-primary/25 font-bold underline underline-offset-4 hover:text-[var(--primary-hover)]"
             >
-              Sign in
+              Masuk
             </Link>
           </p>
         </form>

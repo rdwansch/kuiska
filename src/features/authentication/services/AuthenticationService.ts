@@ -1,7 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
-
 import {
   findAuthenticationUserByUsername,
   signInAuthenticationUser,
@@ -30,17 +28,17 @@ export async function signIn(
       rawField === "email" || rawField === "password" ? rawField : "general";
     return {
       data: null,
-      error: issue.message ?? "Invalid sign-in details",
+      error: issue.message ?? "Periksa lagi email dan kata sandimu",
       fields: [field],
     };
   }
 
   const result = await signInAuthenticationUser(parsed.data);
   if (result.error) {
-    return { data: null, error: "Email or password is incorrect", fields: ["general"] };
+    return { data: null, error: "Email atau kata sandi belum cocok", fields: ["general"] };
   }
 
-  redirect("/");
+  return { data: result.data, error: null, fields: [] };
 }
 
 export async function signUp(
@@ -50,7 +48,7 @@ export async function signUp(
   if (!parsed.success) {
     const issue = parsed.error.issues[0];
     const rawField = issue.path[0];
-    if (rawField === "confirmPassword" && issue.message === "Passwords do not match") {
+    if (rawField === "confirmPassword" && issue.message === "Kedua kata sandi belum sama") {
       return {
         data: null,
         error: issue.message,
@@ -61,13 +59,13 @@ export async function signUp(
     if (["username", "name", "email", "password", "confirmPassword"].includes(field)) {
       return {
         data: null,
-        error: issue.message ?? "Invalid sign-up details",
+        error: issue.message ?? "Periksa lagi data akunmu",
         fields: [field],
       };
     }
     return {
       data: null,
-      error: issue.message ?? "Invalid sign-up details",
+      error: issue.message ?? "Periksa lagi data akunmu",
       fields: ["general"],
     };
   }
@@ -77,7 +75,7 @@ export async function signUp(
   if (userExist.error) {
     return {
       data: null,
-      error: "Unable to check username availability. Try again",
+      error: "Kuiska belum bisa memeriksa nama pengguna. Coba lagi",
       fields: ["general"],
     };
   }
@@ -85,7 +83,7 @@ export async function signUp(
   if (userExist.data?.id) {
     return {
       data: null,
-      error: "That username is already taken",
+      error: "Nama pengguna itu sudah dipakai",
       fields: ["username"],
     };
   }
@@ -101,10 +99,10 @@ export async function signUp(
   if (result.error) {
     return {
       data: null,
-      error: "Unable to create account. Check your details and try again",
+      error: "Akun belum berhasil dibuat. Periksa datamu, lalu coba lagi",
       fields: ["general"],
     };
   }
 
-  redirect("/");
+  return { data: result.data, error: null, fields: [] };
 }

@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const authenticationSignInSchema = z.object({
-  email: z.email("Enter a valid email address"),
-  password: z.string().min(1, "Enter your password"),
+  email: z.email("Tulis alamat email yang valid"),
+  password: z.string().min(1, "Tulis kata sandimu"),
 });
 
 export const authenticationSignUpSchema = z
@@ -10,15 +10,15 @@ export const authenticationSignUpSchema = z
     username: z
       .string()
       .trim()
-      .min(3, "Username must be at least 3 characters")
-      .max(64, "Username must be 64 characters or fewer")
-      .regex(/^[a-zA-Z0-9_]+$/, "Use only letters, numbers, and underscores"),
-    name: z.string().trim().min(1, "Enter your display name").max(255),
-    email: z.email("Enter a valid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
+      .min(3, "Nama pengguna perlu minimal 3 karakter")
+      .max(64, "Nama pengguna maksimal 64 karakter")
+      .regex(/^[a-zA-Z0-9_]+$/, "Pakai huruf, angka, atau garis bawah"),
+    name: z.string().trim().min(1, "Tulis nama tampilanmu").max(255),
+    email: z.email("Tulis alamat email yang valid"),
+    password: z.string().min(8, "Kata sandi perlu minimal 8 karakter"),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
+    message: "Kedua kata sandi belum sama",
     path: ["confirmPassword"],
   });

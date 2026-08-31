@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { signIn, signUp } from "../services/AuthenticationService";
 import type {
   AuthenticationActionResult,
@@ -9,6 +10,7 @@ import type {
 } from "../types/AuthenticationType";
 
 export function useAuthenticationHook() {
+  const router = useRouter();
   const [formInput, setFormInput] = useState<AuthenticationFormInput>(() => ({
     username: "",
     name: "",
@@ -81,9 +83,11 @@ export function useAuthenticationHook() {
           errorFields: fields,
           status: "error",
         }));
-      } else {
-        setFormInput((prev) => ({ ...prev, error: null, errorFields: null, status: "idle" }));
+        return;
       }
+
+      router.replace("/");
+      router.refresh();
     });
   };
 
