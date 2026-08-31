@@ -14,7 +14,7 @@ const globalForDatabase = globalThis as unknown as {
   pool?: mysql.Pool;
 };
 
-const pool =
+export const databasePool =
   globalForDatabase.pool ??
   mysql.createPool({
     uri: databaseUrl,
@@ -22,7 +22,7 @@ const pool =
   });
 
 if (process.env.NODE_ENV !== "production") {
-  globalForDatabase.pool = pool;
+  globalForDatabase.pool = databasePool;
 }
 
-export const db = drizzle(pool, { schema, mode: "default" });
+export const db = drizzle(databasePool, { schema, mode: "default" });
