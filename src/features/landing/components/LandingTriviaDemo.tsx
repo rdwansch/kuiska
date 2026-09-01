@@ -42,9 +42,9 @@ export function LandingTriviaDemo() {
       <div className="relative z-10 mt-7 grid grid-cols-[auto_1fr_auto] items-center gap-3 sm:gap-5">
         <div className="flex items-center gap-2.5">
           <span className="bg-primary text-primary-foreground grid size-10 place-items-center rounded-[48%_52%_43%_57%/54%_42%_58%_46%] font-bold">
-            R
+            L
           </span>
-          <span className="text-sm font-bold">Rani</span>
+          <span className="text-sm font-bold">Lorenza Ayu</span>
         </div>
         <div className="bg-border relative h-px">
           <span className="bg-info absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full" />

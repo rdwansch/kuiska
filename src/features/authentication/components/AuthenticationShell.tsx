@@ -62,7 +62,7 @@ export function AuthenticationShell({ children }: { children: React.ReactNode })
             </span>
           </div>
           <p className="text-muted-foreground mt-4 max-w-md text-center text-sm leading-6">
-            Rani menunggu di room Pengetahuan Umum. Masuk untuk menerima tantangan dan menyimpan
+            Lorenza Ayu menunggu di room Pengetahuan Umum. Masuk untuk menerima tantangan dan menyimpan
             hasil duelmu.
           </p>
         </div>

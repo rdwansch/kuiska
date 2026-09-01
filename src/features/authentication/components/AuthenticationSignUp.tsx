@@ -57,7 +57,7 @@ export function AuthenticationSignUp() {
                 id="signup-name"
                 name="name"
                 type="text"
-                placeholder="Rani"
+                placeholder="name"
                 autoComplete="name"
                 required
                 value={formInput.name}
